@@ -14,18 +14,17 @@ export class PlacesComponent implements OnInit {
   constructor(private placeService: PlaceService) { }
 
   ngOnInit() {
-    this.placeService.addPlace({id: 0, name: 'Minssssk'}); // TODO: debug only, remove
     this.getPlaces();
+    this.placeService.placesChange.subscribe((places: Place[]) => this.places = places);
   }
 
   getPlaces(): void {
     this.placeService.getPlaces()
-      .subscribe(places => this.places = places);
+      .subscribe((places: Place[]) => this.places = places);
   }
 
   delete(place: Place): void {
-    this.placeService.deletePlace(place)
-      .subscribe(places => this.places = places);
+    this.placeService.deletePlace(place);
   }
 
 }

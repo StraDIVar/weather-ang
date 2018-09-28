@@ -6,7 +6,7 @@ import { PlaceDetailComponent } from './place-detail/place-detail.component';
 const routes: Routes = [
   { path: '', redirectTo: '/places', pathMatch: 'full' },
   { path: 'places', component: PlacesComponent },
-  { path: 'place/:id', component: PlaceDetailComponent }
+  { path: 'places/:id', component: PlaceDetailComponent }
 ];
 
 @NgModule({

@@ -1,0 +1,11 @@
+<div id="place-search">
+  <h4>Add Place:</h4>
+
+  <input #searchBox id="search-box" (keyup)="search(searchBox.value)" />
+
+  <ul class="search-result">
+    <li *ngFor="let suggestion of suggestions$ | async" (click)="add(suggestion); searchBox.value = ''">
+      {{suggestion.LocalizedName}}
+    </li>
+  </ul>
+</div>

@@ -2,7 +2,7 @@
 
 <ul class="places">
   <li *ngFor="let place of places">
-    <a routerLink="/detail/{{place.id}}">
+    <a routerLink="/places/{{place.id}}">
       <span class="badge">{{place.id}}</span> {{place.name}}
     </a>
     <button class="delete" title="delete place"

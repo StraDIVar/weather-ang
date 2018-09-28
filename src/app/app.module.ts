@@ -1,22 +1,27 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
+import { StorageServiceModule } from 'angular-webstorage-service';
+
 import { AppComponent } from './app.component';
 import { PlacesComponent } from './places/places.component';
-import { AppRoutingModule } from './/app-routing.module';
 import { PlaceDetailComponent } from './place-detail/place-detail.component';
-import { StorageServiceModule } from 'angular-webstorage-service';
+import { PlaceSearchComponent } from './place-search/place-search.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PlacesComponent,
-    PlaceDetailComponent
+    PlaceDetailComponent,
+    PlaceSearchComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StorageServiceModule
+    StorageServiceModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
