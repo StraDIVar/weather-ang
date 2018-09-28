@@ -1,0 +1,11 @@
+<h2>My Places</h2>
+
+<ul class="places">
+  <li *ngFor="let place of places">
+    <a routerLink="/detail/{{place.id}}">
+      <span class="badge">{{place.id}}</span> {{place.name}}
+    </a>
+    <button class="delete" title="delete place"
+            (click)="delete(place)">x</button>
+  </li>
+</ul>
