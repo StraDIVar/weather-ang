@@ -1,3 +1,18 @@
-<p>
-  place-detail works!
-</p>
+<div *ngIf="currentWeather && place">
+  <h2>Current Weather In <strong class="place-name">{{place.name}}</strong></h2>
+
+  <ul>
+    <li>
+      <h3>Description:</h3>
+      <p>{{currentWeather.WeatherText}}</p>
+    </li>
+    <li>
+      <h3>Temperature:</h3>
+      <p>{{currentWeather.Temperature['Metric']['Value']}}°{{currentWeather.Temperature['Metric']['Unit']}}</p>
+    </li>
+  </ul>
+
+  <h3>Full view:</h3>
+  <a href={{currentWeather.Link}} target="_blank">{{currentWeather.Link}}</a>
+
+</div>

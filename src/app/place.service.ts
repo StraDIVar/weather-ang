@@ -47,6 +47,12 @@ export class PlaceService {
     return of(this.readPlaces());
   }
 
+  getPlace(id: number): Observable<Place> {
+    const places = this.readPlaces().filter(p => p.id === id);
+    const place = places.length ? places[0] : new Place();
+    return of(place);
+  }
+
   addPlace(place: Place): void {
     const places = this.readPlaces();
 
