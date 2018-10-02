@@ -4,8 +4,10 @@
   <input #searchBox id="search-box" (keyup)="search(searchBox.value)" />
 
   <ul class="search-result">
-    <li *ngFor="let suggestion of suggestions$ | async" (click)="add(suggestion); searchBox.value = ''">
-      {{suggestion.LocalizedName}}
+    <li *ngFor="let suggestion of suggestions$ | async">
+      <a routerLink="/places/{{suggestion.Key}}" (click)="add(suggestion); searchBox.value = '';">
+        {{suggestion.LocalizedName}}
+      </a>
     </li>
   </ul>
 </div>

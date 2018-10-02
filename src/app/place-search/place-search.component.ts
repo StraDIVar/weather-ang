@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import {Observable, of, Subject} from 'rxjs';
 
 import {
   debounceTime, distinctUntilChanged, switchMap
@@ -20,6 +20,23 @@ export class PlaceSearchComponent implements OnInit {
 
   constructor(private placeService: PlaceService) { }
 
+  private subscribe(): void {
+    this.suggestions$ = this.searchTerms.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((term: string) => this.placeService.searchPlaces(term)),
+    );
+  }
+
+  private clear(): void {
+    this.suggestions$ = of([]);
+    this.subscribe();
+  }
+
+  ngOnInit(): void {
+    this.subscribe();
+  }
+
   search(term: string): void {
     this.searchTerms.next(term);
   }
@@ -30,14 +47,7 @@ export class PlaceSearchComponent implements OnInit {
       name: placeSuggestion.LocalizedName
     };
     this.placeService.addPlace(place);
-  }
-
-  ngOnInit(): void {
-    this.suggestions$ = this.searchTerms.pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      switchMap((term: string) => this.placeService.searchPlaces(term)),
-    );
+    this.clear();
   }
 
 }

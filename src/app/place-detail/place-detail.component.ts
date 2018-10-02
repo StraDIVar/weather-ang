@@ -18,7 +18,12 @@ export class PlaceDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private placeService: PlaceService,
     private weatherService: WeatherService,
-  ) { }
+  ) {
+    // TODO: may be there is a better solution to trigger update of component when changes only param in path
+    route.params.subscribe(val => {
+      this.ngOnInit();
+    });
+  }
 
   ngOnInit() {
     this.getPlace();
