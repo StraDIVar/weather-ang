@@ -8,8 +8,9 @@ import { PlaceService } from '../place.service';
   styleUrls: ['./places.component.styl']
 })
 export class PlacesComponent implements OnInit {
-
+  page = 1;
   places: Place[];
+  PER_PAGE = 5;
 
   constructor(private placeService: PlaceService) { }
 
