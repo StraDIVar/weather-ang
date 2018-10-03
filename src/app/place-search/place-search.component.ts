@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable, of, Subject} from 'rxjs';
-
+import { Observable, of, Subject } from 'rxjs';
 import {
   debounceTime, distinctUntilChanged, switchMap
 } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
-import { Place } from '../place';
 import { PlaceSuggestion } from '../place-suggestion';
 import { PlaceService } from '../place.service';
 
@@ -18,7 +17,7 @@ export class PlaceSearchComponent implements OnInit {
   suggestions$: Observable<PlaceSuggestion[]>;
   private searchTerms = new Subject<string>();
 
-  constructor(private placeService: PlaceService) { }
+  constructor(private placeService: PlaceService, private router: Router) { }
 
   private subscribe(): void {
     this.suggestions$ = this.searchTerms.pipe(
@@ -42,12 +41,14 @@ export class PlaceSearchComponent implements OnInit {
   }
 
   add(placeSuggestion: PlaceSuggestion): void {
+    const id = +placeSuggestion.Key;
     const place = {
-      id: +placeSuggestion.Key,
+      id: id,
       name: placeSuggestion.LocalizedName
     };
     this.placeService.addPlace(place);
     this.clear();
+    this.router.navigate(['places', id]);
   }
 
 }

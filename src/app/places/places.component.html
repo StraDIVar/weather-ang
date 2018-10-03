@@ -1,14 +1,20 @@
-<h2>My Places</h2>
+<h2>Saved Places</h2>
 
-<ul class="places">
-  <li *ngFor="let place of places | paginate: { itemsPerPage: PER_PAGE, currentPage: page }">
-    <a routerLink="/places/{{place.id}}">
-      <span class="badge">{{place.id}}</span> {{place.name}}
+<mat-list role="list">
+  <mat-list-item role="listitem" *ngFor="let place of places | paginate: { itemsPerPage: PER_PAGE, currentPage: page }">
+    <a class="place-link" routerLink="/places/{{place.id}}">
+      {{place.name}}
     </a>
-    <button class="delete" title="delete place"
-            (click)="delete(place)">x</button>
-  </li>
-</ul>
+
+    &nbsp;
+
+    <button mat-icon-button color="warn" title="Delete"
+            (click)="delete(place)">
+      <mat-icon aria-label="none">remove_circle_outline</mat-icon>
+    </button>
+    <mat-divider></mat-divider>
+  </mat-list-item>
+</mat-list>
 
 <div *ngIf="places.length > PER_PAGE">
   <pagination-controls (pageChange)="page = $event"></pagination-controls>

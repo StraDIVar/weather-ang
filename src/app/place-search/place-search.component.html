@@ -1,13 +1,10 @@
-<div id="place-search">
-  <h4>Add Place:</h4>
+<mat-form-field>
+  <input type="search" #searchBox matInput placeholder="Select a Place" (keyup)="search(searchBox.value)" [matAutocomplete]="auto">
+</mat-form-field>
 
-  <input #searchBox id="search-box" (keyup)="search(searchBox.value)" />
-
-  <ul class="search-result">
-    <li *ngFor="let suggestion of suggestions$ | async">
-      <a routerLink="/places/{{suggestion.Key}}" (click)="add(suggestion); searchBox.value = '';">
-        {{suggestion.LocalizedName}}
-      </a>
-    </li>
-  </ul>
-</div>
+<mat-autocomplete #auto="matAutocomplete">
+  <mat-option *ngFor="let suggestion of suggestions$ | async" [value]="suggestion.LocalizedName"
+              (click)="add(suggestion); searchBox.value = '';">
+    {{suggestion.LocalizedName}}
+  </mat-option>
+</mat-autocomplete>

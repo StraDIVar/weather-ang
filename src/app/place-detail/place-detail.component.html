@@ -1,18 +1,21 @@
-<div *ngIf="currentWeather && place">
-  <h2>Current Weather In <strong class="place-name">{{place.name}}</strong></h2>
+<mat-card *ngIf="currentWeather && place">
+  <mat-card-subtitle>
+    <h2>Current Weather In <strong class="place-name">{{place.name}}</strong></h2>
+  </mat-card-subtitle>
 
-  <ul>
-    <li>
-      <h3>Description:</h3>
-      <p>{{currentWeather.WeatherText}}</p>
-    </li>
-    <li>
-      <h3>Temperature:</h3>
-      <p>{{currentWeather.Temperature['Metric']['Value']}}°{{currentWeather.Temperature['Metric']['Unit']}}</p>
-    </li>
-  </ul>
+  <mat-card-content>
+    <ul>
+      <li>
+        <h3>Description:</h3>
+        <p>{{currentWeather.WeatherText}}</p>
+      </li>
+      <li>
+        <h3>Temperature:</h3>
+        <p>{{currentWeather.Temperature['Metric']['Value']}}°{{currentWeather.Temperature['Metric']['Unit']}}</p>
+      </li>
+    </ul>
 
-  <h3>Full view:</h3>
-  <a href={{currentWeather.Link}} target="_blank">{{currentWeather.Link}}</a>
-
-</div>
+    <h3>Full view:</h3>
+    <a href={{currentWeather.Link}} target="_blank">{{currentWeather.Link}}</a>
+  </mat-card-content>
+</mat-card>
