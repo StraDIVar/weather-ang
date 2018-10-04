@@ -1,5 +1,7 @@
 <h2>Saved Places</h2>
 
+<p>({{places.length | i18nPlural : {'=0': 'No places', '=1': 'One place', 'other': '# places'} }})</p>
+
 <mat-list role="list">
   <mat-list-item role="listitem" *ngFor="let place of places | paginate: { itemsPerPage: PER_PAGE, currentPage: page }">
     <a class="place-link" routerLink="/places/{{place.id}}">
