@@ -51,4 +51,8 @@ export class PlaceSearchComponent implements OnInit {
     this.router.navigate(['places', id]);
   }
 
+  displayFn(value): string {
+    return  value ? value.LocalizedName : '';
+  }
+
 }

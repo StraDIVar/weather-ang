@@ -1,10 +1,13 @@
 <mat-form-field>
-  <input type="search" #searchBox matInput placeholder="Select a Place" (keyup)="search(searchBox.value)" [matAutocomplete]="auto">
+  <input type="search" #searchBox matInput placeholder="Select a Place"
+         [matAutocomplete]="auto"
+         (keyup)="search(searchBox.value)">
 </mat-form-field>
 
-<mat-autocomplete #auto="matAutocomplete">
-  <mat-option *ngFor="let suggestion of suggestions$ | async" [value]="suggestion.LocalizedName"
-              (click)="add(suggestion); searchBox.value = '';">
+<mat-autocomplete #auto="matAutocomplete"
+                  [displayWith]="displayFn"
+                  (optionSelected)="add($event.option.value)">
+  <mat-option *ngFor="let suggestion of suggestions$ | async" [value]="suggestion">
     {{suggestion.LocalizedName}}
   </mat-option>
 </mat-autocomplete>
