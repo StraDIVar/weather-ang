@@ -13,6 +13,7 @@ export class PlaceService {
   static STORAGE_KEY = 'weather-ang-places';
   static WEATHER_API_KEY = 'Wl0CVjmemmXYgGytOopGHvQxitWCSG87'; // TODO: move this out of Git
   static WEATHER_API_AUTOCOMPLETE_URL = 'http://dataservice.accuweather.com/locations/v1/cities/autocomplete';
+  static WEATHER_API_GEOPOSITION_URL = 'http://dataservice.accuweather.com/locations/v1/cities/geoposition/search';
 
   placesChange: Subject<Place[]> = new Subject<Place[]>();
 
@@ -22,6 +23,11 @@ export class PlaceService {
 
   static autocompleteUrl(term: string): string {
     return `${PlaceService.WEATHER_API_AUTOCOMPLETE_URL}?apikey=${PlaceService.WEATHER_API_KEY}&q=${term}`;
+  }
+
+  static geopositionUrl(position: Position): string {
+    return `${PlaceService.WEATHER_API_GEOPOSITION_URL}?apikey=${PlaceService.WEATHER_API_KEY}` +
+      `&q=${position.coords.latitude},${position.coords.longitude}`;
   }
 
   private readPlaces(): Place[] {
@@ -51,6 +57,12 @@ export class PlaceService {
     const places = this.readPlaces().filter(p => p.id === id);
     const place = places.length ? places[0] : new Place();
     return of(place);
+  }
+
+  getPlaceForPosition(position: Position): Observable<PlaceSuggestion> {
+    return this.http.get<PlaceSuggestion>(PlaceService.geopositionUrl(position)).pipe(
+      catchError(this.handleError('get place by geoposition', new PlaceSuggestion()))
+    );
   }
 
   addPlace(place: Place): void {

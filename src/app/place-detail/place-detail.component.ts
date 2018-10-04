@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {WeatherService} from '../weather.service';
 import {Place} from '../place';
@@ -11,8 +11,8 @@ import {PlaceService} from '../place.service';
   styleUrls: ['./place-detail.component.styl']
 })
 export class PlaceDetailComponent implements OnInit {
-  @Input() place: Place;
-  @Input() currentWeather: CurrentWeather;
+  place: Place;
+  currentWeather: CurrentWeather;
 
   constructor(
     private route: ActivatedRoute,
@@ -26,22 +26,45 @@ export class PlaceDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getPlace();
-    this.getCurrentWeather();
+    if (this.getId() === 'current') {
+      this.getDefaultWeather();
+    } else {
+      this.getPlace(this.getId());
+      this.getWeather(this.getId());
+    }
   }
 
-  private getId(): number {
-    return +this.route.snapshot.paramMap.get('id');
+  private getId(): number | 'current' {
+    const id = this.route.snapshot.paramMap.get('id');
+    return id === 'current' ? id : +id;
   }
 
-  private getPlace(): void {
-    this.placeService.getPlace(this.getId())
-      .subscribe(place => this.place = place);
+  private getPlace(id: number | 'current'): void {
+    if (id !== 'current') {
+      this.placeService.getPlace(id)
+        .subscribe(place => this.place = place);
+    }
   }
 
-  private getCurrentWeather(): void {
-    this.weatherService.getCurrentWeather(this.getId())
-      .subscribe(currentWeather => this.currentWeather = currentWeather[0]);
+  private getWeather(id: number | 'current'): void {
+    if (id !== 'current') {
+      this.weatherService.getCurrentWeather(id)
+        .subscribe(currentWeather => this.currentWeather = currentWeather[0]);
+    }
+  }
+
+  private getDefaultWeather(): void {
+    navigator.geolocation.getCurrentPosition(position => {
+      this.placeService.getPlaceForPosition(position)
+        .subscribe(placeSuggestion => {
+          const id = +placeSuggestion.Key;
+          this.place = {
+            id: id,
+            name: placeSuggestion.LocalizedName
+          };
+          this.getWeather(id);
+        });
+    });
   }
 
 }
