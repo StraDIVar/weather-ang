@@ -3,6 +3,17 @@
     <h1>{{title}}</h1>
   </mat-card-header>
 
+  <mat-divider></mat-divider>
+
+  <nav>
+    <a mat-button routerLink="/places/current" routerLinkActive="active">Home</a>
+    <a mat-button routerLink="/places"
+                  [routerLinkActiveOptions]="{exact: true}"
+                  routerLinkActive="active">Saved Places</a>
+  </nav>
+
+  <mat-divider></mat-divider>
+
   <mat-card-content>
     <app-place-search></app-place-search>
     <router-outlet></router-outlet>
